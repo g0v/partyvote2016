@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.js"></script>
+    <script src="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="main.css" media="screen" title="no title" charset="utf-8">
+    <script src="main.js"></script>
+  </head>
+  <body>
+    
+      <div ng-app="partyVote">
+          <div ng-controller="MainCtrl" class="wrapper">
+              <header>
+                   <h1>政黨票計算機</h1>
+              </header>
+              <article>
+                   <div class="row vertical-sliders" style="margin: 20px; margin-bottom: 100px">
+                     <div ng-repeat="(key, party) in parties" class="col-md-2">
+                       
+                       <rzslider rz-slider-model="party.value" rz-slider-options="party.options"></rzslider>
+                       <div>{{party.name}}<br>百分比： {{party.value}}<br>進階百分比： {{party.advancedValue}}<br>席次：{{party.seats}}</div>
+                     </div>
+                   </div>
+              </article>
+          </div>
+      </div>
+    
+  </body>
+</html>
