@@ -38,6 +38,7 @@ article {
 
 .vertical-sliders > div {
     height: 250px;
+    margin-bottom: 120px;
 }
 
 .wrapper {
@@ -48,6 +49,7 @@ article {
 @media (max-width: 992px) {
   .vertical-sliders > div {
       height: auto;
+      margin-bottom: 0;
   }
 
   .wrapper {
@@ -68,4 +70,8 @@ article {
 
 .info {
   margin-top: 30px;
+}
+
+.remove-button {
+  color: red;
 }

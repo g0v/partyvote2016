@@ -68,12 +68,25 @@ function updateSliderStyle(parties, vertical) {
 app.controller('MainCtrl', function ($scope, screenSize) {
   var totalSeats = 34;
   var parties = [
-    {id: 'remain', name: '未分配比例'},
-    {id: 'dpp', name: '民主進步黨'},
-    {id: 'kmt', name: '中國國民黨'},
-    {id: 'npp', name: '時代力量'},
-    {id: 'sdp', name: '綠黨與社民黨聯盟'},
-    {id: 'pfp', name: '親民黨'}
+    {no: 0, id: 'remain', name: '未分配比例'},
+    {no: 1, id: 'dpp', name: '民主進步黨', enabled: true},
+    {no: 2, id: 'pfp', name: '親民黨', enabled: true},
+    {no: 3, id: 'ftp', name: '自由台灣黨'},
+    {no: 4, id: 'ppup', name: '和平鴿聯盟黨'},
+    {no: 5, id: 'mcfap', name: '軍公教聯盟黨'},
+    {no: 6, id: 'mkt', name: '民國黨'},
+    {no: 7, id: 'fhl', name: '信心希望聯盟'},
+    {no: 8, id: 'up', name: '中華統一促進黨'},
+    {no: 9, id: 'kmt', name: '中國國民黨', enabled: true},
+    {no: 10, id: 'tsu', name: '台灣團結聯盟'},
+    {no: 11, id: 'npp', name: '時代力量', enabled: true},
+    {no: 12, id: 'cct', name: '大愛憲改聯盟'},
+    {no: 13, id: 'sdp', name: '綠黨與社民黨聯盟', enabled: true},
+    {no: 14, id: 'ti', name: '台灣獨立黨'},
+    {no: 15, id: 'npsu', name: '無黨團結聯盟'},
+    {no: 16, id: 'np', name: '新黨'},
+    {no: 17, id: 'nhsa', name: '健保免費連線'},
+    {no: 18, id: 'tp', name: '樹黨'}
   ];
   $scope.parties = {};
 
@@ -90,7 +103,7 @@ app.controller('MainCtrl', function ($scope, screenSize) {
     updateSliderStyle(parties, $scope.desktop);
   });
 
-  function onChange() {
+  function update() {
     var id = this.id;
     var party = $scope.parties[id];
     var total = 0.0;
@@ -125,10 +138,19 @@ app.controller('MainCtrl', function ($scope, screenSize) {
       step: 0.1,
       vertical: $scope.desktop,
       readOnly: party.id === 'remain',
-      onChange: onChange,
-      onEnd: onChange
+      disabled: party.id === 'remain',
+      onChange: update,
+      onEnd: update
     };
   });
+
+  $scope.toggle = function(party) {
+    party.enabled = !party.enabled;
+    party.value = 0;
+    party.seats = 0;
+    party.advancedValue = 0;
+    update();
+  }
 
   updateSliderStyle(parties, $scope.desktop);
 });
