@@ -39,7 +39,7 @@ app.controller('MainCtrl', function ($scope) {
     
     parties.forEach(function(party) {
       if (party.win) {
-        party.advancedValue = parseFloat(party.value) * (100 / advancedTotal);
+        party.advancedValue = (parseFloat(party.value) * (100 / advancedTotal)).toFixed(1);
         party.seats = Math.round(totalSeats * (party.advancedValue / 100));
       }
       else {
