@@ -42,7 +42,7 @@
                    <div class="row">
                      <div class="col-md-3" ng-repeat="(key, party) in parties" ng-show="party.enabled" class="party">
                        <h3>{{party.name}}</h3>
-                       <span ng-repeat="candidate in party.candidates"><span ng-class="{'label-success': $index < party.seats}" class="label label-default">{{candidate}}</span> </span>
+                       <span ng-repeat="candidate in party.candidates"><span ng-class="{'label-info': $index < party.seats}" class="label label-default">{{candidate}}</span> </span>
                      </div>
                    </div>
                    <h2>加入其他政黨</h2>
