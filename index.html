@@ -38,6 +38,13 @@
                        </div>
                      </div>
                    </div>
+                   <h2>預計當選候選人</h2>
+                   <div class="row">
+                     <div class="col-md-3" ng-repeat="(key, party) in parties" ng-show="party.enabled" class="party">
+                       <h3>{{party.name}}</h3>
+                       <span ng-repeat="candidate in party.candidates"><span ng-class="{'label-success': $index < party.seats}" class="label label-default">{{candidate}}</span> </span>
+                     </div>
+                   </div>
                    <h2>加入其他政黨</h2>
                     <span ng-repeat="(key, party) in parties" ng-hide="party.enabled || party.id === 'remain'"><button ng-click="toggle(party)" type="button" class="btn btn-default">
                       <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> {{party.name}}

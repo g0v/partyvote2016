@@ -65,7 +65,6 @@ article {
 
 .container .vertical-sliders {
   margin: 20px;
-  margin-bottom: 150px;
 }
 
 .info {
@@ -83,4 +82,8 @@ article {
 
 .howto button {
   margin-bottom: 20px;
+}
+
+h3 {
+  font-size: 16px;
 }
