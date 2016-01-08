@@ -2,8 +2,11 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>政黨票計算機</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    <script type='text/javascript' src='match-media.js'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.14.3/ui-bootstrap-tpls.js"></script>
     <script src="https://rawgit.com/rzajac/angularjs-slider/master/dist/rzslider.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" media="screen" title="no title" charset="utf-8">
@@ -18,10 +21,9 @@
               <header>
                    <h1>政黨票計算機</h1>
               </header>
-              <article>
-                   <div class="row vertical-sliders" style="margin: 20px; margin-bottom: 100px">
-                     <div ng-repeat="(key, party) in parties" class="col-md-2">
-                       
+              <article class="container">
+                   <div class="row vertical-sliders">
+                     <div ng-repeat="(key, party) in parties" ng-class="{'col-md-2': desktop}">
                        <rzslider rz-slider-model="party.value" rz-slider-options="party.options"></rzslider>
                        <div>{{party.name}}<br>百分比： {{party.value}}<br>進階百分比： {{party.advancedValue}}<br>席次：{{party.seats}}</div>
                      </div>
@@ -30,6 +32,5 @@
               <div class="footer">結果有錯？請到 <a href="https://github.com/yurenju/partyvote">github</a> 發 issue / Pull request!</div>
           </div>
       </div>
-    
   </body>
 </html>

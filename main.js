@@ -1,4 +1,4 @@
-var app = angular.module('partyVote', ['rzModule', 'ui.bootstrap']);
+var app = angular.module('partyVote', ['rzModule', 'ui.bootstrap', 'matchMedia']);
 
 /**
   Rules - http://law.moj.gov.tw/LawClass/LawSingle.aspx?Pcode=D0020010&FLNO=67
@@ -59,7 +59,13 @@ function calculateSeats(totalSeat, partyValues) {
   return result;
 }
 
-app.controller('MainCtrl', function ($scope) {
+function updateSliderStyle(parties, vertical) {
+  parties.forEach(function(party) {
+    party.options.vertical = vertical;
+  });
+}
+
+app.controller('MainCtrl', function ($scope, screenSize) {
   var totalSeats = 34;
   var parties = [
     {id: 'remain', name: '未分配比例'},
@@ -70,8 +76,20 @@ app.controller('MainCtrl', function ($scope) {
     {id: 'pfp', name: '親民黨'}
   ];
   $scope.parties = {};
-  
-  
+
+  $scope.desktop = screenSize.is('md, lg');
+  $scope.mobile = screenSize.is('xs, sm');
+
+  // Using dynamic method `on`, which will set the variables initially and then update the variable on window resize
+  screenSize.on('md, lg', function(match){
+    $scope.desktop = match;
+    updateSliderStyle(parties, $scope.desktop);
+  });
+  screenSize.on('xs, sm', function(match){
+    $scope.mobile = match;
+    updateSliderStyle(parties, $scope.desktop);
+  });
+
   function onChange() {
     var id = this.id;
     var party = $scope.parties[id];
@@ -82,19 +100,19 @@ app.controller('MainCtrl', function ($scope) {
       }
     });
     $scope.parties.remain.value = (100 - total).toFixed(4);
-    
+
     if ($scope.parties.remain.value < 0) {
       party.value = parseFloat(party.value) + parseFloat($scope.parties.remain.value);
       $scope.parties.remain.value = 0;
     }
-    
+
     var calculated = calculateSeats(totalSeats, parties.map(function(p){return parseFloat(p.value)}))
     calculated.forEach(function(data, idx){
       parties[idx].advancedValue = data.advancedValue
       parties[idx].seats = data.seat
     })
   }
-  
+
   parties.forEach(function(party) {
     $scope.parties[party.id] = party;
     party.value = party.id === 'remain' ? 100 : 0;
@@ -105,10 +123,12 @@ app.controller('MainCtrl', function ($scope) {
       ceil: 100,
       precision: 1,
       step: 0.1,
-      vertical: true,
+      vertical: $scope.desktop,
       readOnly: party.id === 'remain',
       onChange: onChange,
       onEnd: onChange
     };
   });
+
+  updateSliderStyle(parties, $scope.desktop);
 });
