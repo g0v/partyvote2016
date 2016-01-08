@@ -22,10 +22,7 @@ h1 {
 h2 {
     margin-bottom:10px;
 }
-.wrapper {
-    background: #fff;
-    padding: 40px;
-}
+
 article {
     margin-bottom: 10px;
 }
@@ -43,9 +40,18 @@ article {
     height: 250px;
 }
 
+.wrapper {
+    background: #fff;
+    padding: 40px;
+}
+
 @media (max-width: 992px) {
   .vertical-sliders > div {
       height: auto;
+  }
+
+  .wrapper {
+      padding: 0;
   }
 }
 
