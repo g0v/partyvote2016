@@ -12,48 +12,48 @@ var app = angular.module('partyVote', ['rzModule', 'ui.bootstrap', 'matchMedia']
 
   @param {Number} totalSeat - total number of seats
   @param {Number[]} partyValues - list of raw percentage of each party
-  @return {Object()} List of {advancedValue, seats}
+  @return {Object()} List of {value, seats}
 */
-function calculateSeats(totalSeat, partyValues) {
+function calculateSeats(totalSeat, stage1votes) {
   // Apply rule 5 & rule 1
   //
-  var sum = partyValues.reduce(function(s, p){
+  var stage1sum = stage1votes.reduce(function(s, p){
     return s + (p >= 5 ? p : 0)
   }, 0);
 
-  var normalizedPercentage = partyValues.map(function(p){
-    return p >= 5 ? +(p * 100 / sum).toFixed(4) : 0
+  var stage2votes = stage1votes.map(function(p){
+    return p >= 5 ? +(p * 100 / stage1sum).toFixed(4) : 0
   });
 
   // Apply rule 2
   //
-  var flooredSeatSum = 0
-  var parties = normalizedPercentage.map(function(p, idx){
+  var stage2totalSeat = 0
+  var partiesData = stage2votes.map(function(p, idx){
     var seat = totalSeat * p / 100, flooredSeat = Math.floor(seat);
 
-    flooredSeatSum += flooredSeat;
+    stage2totalSeat += flooredSeat;
 
     return {
-      id: idx, // parties will be sorted later, thus requires idx
+      id: idx, // partiesData will be sorted later, thus requires idx
       seat: flooredSeat,
       remain: seat - flooredSeat
     }
   })
 
-  var result = normalizedPercentage.map(function(p, idx){
+  var result = stage2votes.map(function(p, idx){
     return {
-      advancedValue: p,
-      seat: parties[idx].seat
+      value: p,
+      seat: partiesData[idx].seat
     }
   });
 
   // Apply rule 3 (Ignore the 抽籤 part)
   //
-  parties.sort(function(a, b){return b.remain-a.remain})
-  while(flooredSeatSum < totalSeat) {
-    var party = parties.shift();
-    result[party.id].seat += 1;
-    flooredSeatSum += 1;
+  partiesData.sort(function(a, b){return b.remain-a.remain})
+  while(stage2totalSeat < totalSeat) {
+    var partyData = partiesData.shift();
+    result[partyData.id].seat += 1;
+    stage2totalSeat += 1;
   }
 
   return result;
@@ -108,7 +108,7 @@ app.controller('MainCtrl', function ($scope, screenSize) {
 
     var calculated = calculateSeats(totalSeats, parties.map(function(p){return parseFloat(p.value)}))
     calculated.forEach(function(data, idx){
-      parties[idx].advancedValue = data.advancedValue
+      parties[idx].advancedValue = data.value
       parties[idx].seats = data.seat
     })
   }
