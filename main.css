@@ -41,3 +41,9 @@ article {
 .vertical-sliders > div {
     height: 250px;
 }
+
+.footer {
+  background: #EEE;
+  padding: 5px;
+  text-align: center;
+}
