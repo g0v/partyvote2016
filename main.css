@@ -75,3 +75,12 @@ article {
 .remove-button {
   color: red;
 }
+
+.howto {
+  text-align: center;
+  margin: 50px;
+}
+
+.howto button {
+  margin-bottom: 20px;
+}

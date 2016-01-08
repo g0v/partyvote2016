@@ -89,6 +89,7 @@ app.controller('MainCtrl', function ($scope, screenSize) {
     {no: 18, id: 'tp', name: '樹黨'}
   ];
   $scope.parties = {};
+  $scope.showVideo = false;
 
   $scope.desktop = screenSize.is('md, lg');
   $scope.mobile = screenSize.is('xs, sm');
