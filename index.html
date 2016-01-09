@@ -43,9 +43,11 @@
                    <div class="row">
                      <div class="col-md-3" ng-repeat="(key, party) in parties" ng-show="party.enabled" class="party">
                        <h3>{{party.name}}</h3>
-                       <span ng-repeat="candidate in party.candidates"><span ng-class="{'label-info': $index < party.seats}" class="label label-default">{{candidate}}</span> </span>
+                       <span ng-repeat="candidate in party.candidates">
+                         <span ng-class="{'label-info': candidate.win, 'female': candidate.gender === 'F', 'label-disabled': !candidate.win}" class="label">{{candidate.candidatename}}</span> </span>
                      </div>
                    </div>
+                   <div class="female-info alert alert-info" role="alert">粉紅色為婦女保障名額立委，依照選罷法規定，不分區名額婦女不得低於二分之一。</div>
                    <h2>加入其他政黨</h2>
                     <span ng-repeat="(key, party) in parties" ng-hide="party.enabled || party.id === 'remain'"><button ng-click="toggle(party)" type="button" class="btn btn-default">
                       <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> {{party.name}}

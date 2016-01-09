@@ -87,3 +87,21 @@ article {
 h3 {
   font-size: 16px;
 }
+
+.label-info.female {
+  color: white;
+  background-color: #D002B6;
+}
+
+.female-info {
+  margin-top: 20px;
+}
+
+.label.label-disabled {
+  border: #BBB 1px solid;
+  color: #BBB
+}
+
+.label.label-info {
+  border: #FFF 1px solid;
+}

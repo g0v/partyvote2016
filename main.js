@@ -65,99 +65,62 @@ function updateSliderStyle(parties, vertical) {
   });
 }
 
-app.controller('MainCtrl', function ($scope, screenSize) {
+app.controller('MainCtrl', function ($scope, $http, screenSize) {
   var totalSeats = 34;
   var parties = [
     {no: 0, id: 'remain', name: '未分配比例'},
     {
-      no: 1, id: 'dpp', name: '民主進步黨', enabled: true,
-      candidates: ['吳焜裕', '吳玉琴', '陳曼麗', '顧立雄', '蔡培慧', '王榮璋',
-      '谷辣斯·尤達卡（Kolas Yotaka）', '余宛如', '蘇嘉全', '段宜康', '鄭麗君',
-      '陳其邁', '尤美女', '李應元', '鍾孔炤', '林靜儀', '徐國勇', '施義芳', '周春米',
-      '李麗芬', '郭正亮', '邱泰源', '蔣絜安', '陳靜敏', '黃義佑', '余莓莓', '陳義聰',
-      '江梅惠（Abu Kaaviana）', '謝世英', '曾美玲', '董建宏', '蔡宛芬', '黃帝穎',
-      '王貴蓮']
+      no: 1, id: 'dpp', name: '民主進步黨', enabled: true},
+    {
+      no: 2, id: 'pfp', name: '親民黨', enabled: true
     },
     {
-      no: 2, id: 'pfp', name: '親民黨', enabled: true,
-      candidates: ['李鴻鈞', '陳怡潔', '周陳秀霞', '黃越宏', '楊紫宗', '何偉真',
-      '葉青', '胡祖慶', '鄭美蘭', '任睦杉', '劉冠霆', '董貞吟', '藍姿寬', '張克士',
-      '黎淑慧', '李漢強']
+      no: 3, id: 'ftp', name: '自由台灣黨'
     },
     {
-      no: 3, id: 'ftp', name: '自由台灣黨',
-      candidates: ['蕭曉玲', '郭正典', '周芷萱', '林世杰', '李淑慧', '蔡丁貴']
+      no: 4, id: 'ppup', name: '和平鴿聯盟黨'
     },
     {
-      no: 4, id: 'ppup', name: '和平鴿聯盟黨',
-      candidates: ['吳宛甄', '鄭文松', '莊秉鴻']
+      no: 5, id: 'mcfap', name: '軍公教聯盟黨'
     },
     {
-      no: 5, id: 'mcfap', name: '軍公教聯盟黨',
-      candidates: ['張賜', '陳金梅', '汪耀華', '陸炳成', '魏千妮']
+      no: 6, id: 'mkt', name: '民國黨'
     },
     {
-      no: 6, id: 'mkt', name: '民國黨',
-      candidates: ['陳漢洲', '林錫維', '陳奕樵', '蔡慧玲', '李天鐸', '何宇羚',
-      '曾玉瓊', '蔡宥祥', '陳麗紋', '劉美貞']
+      no: 7, id: 'fhl', name: '信心希望聯盟'
     },
     {
-      no: 7, id: 'fhl', name: '信心希望聯盟',
-      candidates: ['董保城', '李莉娟', '黃迺毓', '陶君亮', '南岳君', '馮珮']
+      no: 8, id: 'up', name: '中華統一促進黨'
     },
     {
-      no: 8, id: 'up', name: '中華統一促進黨',
-      candidates: ['張安樂', '趙福芬', '莊永彰', '肖雲霞', '陳建華', '李淑華',
-      '張孟崇', '陳韻如', '李宗奎', '康淑敏']
+      no: 9, id: 'kmt', name: '中國國民黨', enabled: true
     },
     {
-      no: 9, id: 'kmt', name: '中國國民黨', enabled: true,
-      candidates: ['王金平', '柯志恩', '陳宜民', '林麗蟬', '許毓仁', '曾銘宗',
-      '黃昭順', '吳志揚', '張麗善', '徐榛蔚', '曾永權', '王育敏', '胡築生', '林奕華',
-      '童惠珍（僑）', '李貴敏', '徐巧芯', '陳玉梅', '侯佳齡', '李德維', '馬在勤',
-      '連元章（僑）', '林倩綺', '邱素蘭', '王桂芸', '林信華', '楊建中', '郭淑娟',
-      '鄭女勤', '李正皓', '曾瓊瑤', '林家興', '蕭敬嚴']
+      no: 10, id: 'tsu', name: '台灣團結聯盟'
     },
     {
-      no: 10, id: 'tsu', name: '台灣團結聯盟',
-      candidates: ['陳奕齊', '顏綠芬', '賴振昌', '傅馨儀', '黃光藝', '李心儀',
-      '高基讚', '張素華', '張兆林', '周倪安', '丁文祺', '林玉芳', '李卓翰', '張禾沂',
-      '蔡青芳']
+      no: 11, id: 'npp', name: '時代力量', enabled: true
     },
     {
-      no: 11, id: 'npp', name: '時代力量', enabled: true,
-      candidates: ['高潞·以用·巴魕剌（Kawlo Iyun Pacidal）', '徐永明', '鄭秀玲',
-      '柯劭臻', '林依瑩', '柯一正']
+      no: 12, id: 'cct', name: '大愛憲改聯盟'
     },
     {
-      no: 12, id: 'cct', name: '大愛憲改聯盟',
-      candidates: ['黃千明', '吾爾開希·多萊特', '黃馨主', '張怡菁', '李宗勲', '洪美珍']
+      no: 13, id: 'sdp', name: '綠黨與社民黨聯盟', enabled: true
     },
     {
-      no: 13, id: 'sdp', name: '綠黨與社民黨聯盟', enabled: true,
-      candidates: ['張麗芬', '李根政', '詹順貴', '葉大華', '謝英俊', '許秀雯']
+      no: 14, id: 'ti', name: '台灣獨立黨'
     },
     {
-      no: 14, id: 'ti', name: '台灣獨立黨',
-      candidates: ['田明達']
+      no: 15, id: 'npsu', name: '無黨團結聯盟'
     },
     {
-      no: 15, id: 'npsu', name: '無黨團結聯盟',
-      candidates: ['林炳坤', '黃美蘭', '游旻慈', '鄭美珠', '蔡詠鍀', '蔡錦賢',
-      '謝忠恆']
+      no: 16, id: 'np', name: '新黨'
     },
     {
-      no: 16, id: 'np', name: '新黨',
-      candidates: ['葉毓蘭', '邱毅', '沈采穎', '唐慧琳', '陳麗玲', '王炳忠', '蘇恆',
-      '侯漢廷', '趙家蓉', '楊世光']
+      no: 17, id: 'nhsa', name: '健保免費連線'
     },
     {
-      no: 17, id: 'nhsa', name: '健保免費連線',
-      candidates: ['許榮淑', '林東雄', '黃嘉華']
-    },
-    {
-      no: 18, id: 'tp', name: '樹黨',
-      candidates: ['潘翰聲', '邱馨慧']
+      no: 18, id: 'tp', name: '樹黨'
     }
   ];
   $scope.parties = {};
@@ -196,11 +159,34 @@ app.controller('MainCtrl', function ($scope, screenSize) {
     calculated.forEach(function(data, idx){
       parties[idx].advancedValue = data.value
       parties[idx].seats = data.seat
-    })
+    });
+
+    parties.forEach(function(party) {
+      party.candidates.forEach(function(c) {
+        c.win = false;
+      })
+
+      var remainSeats = party.seats - Math.ceil(party.seats / 2);
+      var females = party.candidates.filter(function(c) {
+        return c.gender === 'F';
+      });
+
+      females.forEach(function(c, index) {
+        c.win = index < Math.ceil(party.seats / 2);
+      });
+
+      party.candidates.forEach(function(c) {
+        if (remainSeats > 0 && !c.win) {
+          c.win = true;
+          remainSeats--;
+        }
+      });
+    });
   }
 
   parties.forEach(function(party) {
     $scope.parties[party.id] = party;
+    party.candidates = [];
     party.value = party.id === 'remain' ? 100 : 0;
     party.seats = party.id === 'remain' ? totalSeats : 0;
     party.advancedValue = party.id === 'remain' ? 100 : 0;
@@ -223,7 +209,19 @@ app.controller('MainCtrl', function ($scope, screenSize) {
     party.seats = 0;
     party.advancedValue = 0;
     update();
-  }
+  };
+
+  $http.get('candidates.json').then(function(res) {
+    $scope.candidates = res.data['全國不分區及僑居國外國民立委公報'];
+    $scope.candidates.sort(function(a, b) {
+      return a.nosequence - b.nosequence;
+    });
+
+    $scope.candidates.forEach(function(candidate) {
+      var no = parseInt(candidate.drawno);
+      parties[no].candidates.push(candidate);
+    });
+  });
 
   updateSliderStyle(parties, $scope.desktop);
 });
