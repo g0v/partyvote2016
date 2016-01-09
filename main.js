@@ -164,15 +164,18 @@ app.controller('MainCtrl', function ($scope, $http, screenSize) {
     parties.forEach(function(party) {
       party.candidates.forEach(function(c) {
         c.win = false;
-      })
+      });
 
-      var remainSeats = party.seats - Math.ceil(party.seats / 2);
+      var seats = party.seats > party.candidates.length ?
+                  party.candidates.length : party.seats;
+
+      var remainSeats = seats - Math.ceil(seats / 2);
       var females = party.candidates.filter(function(c) {
         return c.gender === 'F';
       });
 
       females.forEach(function(c, index) {
-        c.win = index < Math.ceil(party.seats / 2);
+        c.win = index < Math.ceil(seats / 2);
       });
 
       party.candidates.forEach(function(c) {
