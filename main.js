@@ -70,57 +70,57 @@ app.controller('MainCtrl', function ($scope, $http, screenSize) {
   var parties = [
     {no: 0, id: 'remain', name: '未分配比例'},
     {
-      no: 1, id: 'dpp', name: '民主進步黨', enabled: true},
+      no: 1, id: 'dpp', name: '民主進步黨', enabled: true, partyno: "016"},
     {
-      no: 2, id: 'pfp', name: '親民黨', enabled: true
+      no: 2, id: 'pfp', name: '親民黨', enabled: true, partyno: "090"
     },
     {
-      no: 3, id: 'ftp', name: '自由台灣黨'
+      no: 3, id: 'ftp', name: '自由台灣黨', partyno: "272"
     },
     {
-      no: 4, id: 'ppup', name: '和平鴿聯盟黨'
+      no: 4, id: 'ppup', name: '和平鴿聯盟黨', partyno: "266"
     },
     {
-      no: 5, id: 'mcfap', name: '軍公教聯盟黨'
+      no: 5, id: 'mcfap', name: '軍公教聯盟黨', partyno: "258"
     },
     {
-      no: 6, id: 'mkt', name: '民國黨'
+      no: 6, id: 'mkt', name: '民國黨', partyno: "268"
     },
     {
-      no: 7, id: 'fhl', name: '信心希望聯盟'
+      no: 7, id: 'fhl', name: '信心希望聯盟', partyno: "283"
     },
     {
-      no: 8, id: 'up', name: '中華統一促進黨'
+      no: 8, id: 'up', name: '中華統一促進黨', partyno: "113"
     },
     {
-      no: 9, id: 'kmt', name: '中國國民黨', enabled: true
+      no: 9, id: 'kmt', name: '中國國民黨', enabled: true, partyno: "001"
     },
     {
-      no: 10, id: 'tsu', name: '台灣團結聯盟'
+      no: 10, id: 'tsu', name: '台灣團結聯盟', partyno: "095",
     },
     {
-      no: 11, id: 'npp', name: '時代力量', enabled: true
+      no: 11, id: 'npp', name: '時代力量', enabled: true, partyno: "267"
     },
     {
-      no: 12, id: 'cct', name: '大愛憲改聯盟'
+      no: 12, id: 'cct', name: '大愛憲改聯盟', partyno: "134"
     },
     {
-      no: 13, id: 'sdp', name: '綠黨與社民黨聯盟', enabled: true
+      no: 13, id: 'sdp', name: '綠黨與社民黨聯盟', enabled: true, partyno: "281"
     },
     {
-      no: 14, id: 'ti', name: '台灣獨立黨'
+      no: 14, id: 'ti', name: '台灣獨立黨', partyno: "273"
     },
     {
-      no: 15, id: 'npsu', name: '無黨團結聯盟'
+      no: 15, id: 'npsu', name: '無黨團結聯盟', partyno: "106"
     },
     {
-      no: 16, id: 'np', name: '新黨'
+      no: 16, id: 'np', name: '新黨', partyno: "074"
     },
     {
-      no: 17, id: 'nhsa', name: '健保免費連線'
+      no: 17, id: 'nhsa', name: '健保免費連線', partyno: "189"
     },
     {
-      no: 18, id: 'tp', name: '樹黨'
+      no: 18, id: 'tp', name: '樹黨', partyno: "259"
     }
   ];
   $scope.parties = {};
