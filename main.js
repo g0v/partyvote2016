@@ -42,6 +42,7 @@ function calculateSeats(totalSeat, stage1votes) {
 
   var result = stage2votes.map(function(p, idx){
     return {
+      stage1votes: stage1votes[idx],
       value: p,
       seat: partiesData[idx].seat
     }
@@ -177,6 +178,7 @@ app.controller('MainCtrl', function ($scope, $http, screenSize) {
       }
     ));
     calculated.forEach(function(data, idx){
+      parties[idx].stage1Value = data.stage1votes.toFixed(4)
       parties[idx].advancedValue = data.value
       parties[idx].seats = data.seat
     });
