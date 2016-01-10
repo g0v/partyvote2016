@@ -33,7 +33,7 @@
                          {{party.name}} <a ng-click="toggle(party)"><span ng-hide="party.id === 'remain'" class="remove-button glyphicon glyphicon-remove-sign" aria-hidden="true"></span></a><br>
                          <div ng-hide="party.id === 'remain'">
                            <strong>得票率</strong><br>
-                           &nbsp;&nbsp;第一階段： <input ng-change="update(party.id)" class="first-stage" type="text" ng-model="party.value"><br>
+                           &nbsp;&nbsp;第一階段： <input ng-change="update(party.id)" class="first-stage" type="text" ng-model="party.value" type="number"><br>
                            &nbsp;&nbsp;第二階段： {{party.advancedValue}}<br>
                            席次：{{party.seats > party.candidates.length ? party.candidates.length : party.seats}}<br>
                            <span ng-show="party.id !== 'remain' && party.seats - party.candidates.length > 0">缺額：{{party.seats - party.candidates.length}}</span>
