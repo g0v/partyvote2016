@@ -148,6 +148,9 @@ app.controller('MainCtrl', function ($scope, $http, screenSize) {
     id = this.id || id;
     var party = $scope.parties[id];
     var total = 0.0;
+
+    if (party) party.value = parseFloat(party.value) || 0;
+
     parties.forEach(function(party) {
       if (party.id !== 'remain') {
         total +=  parseFloat(party.value);
@@ -156,7 +159,7 @@ app.controller('MainCtrl', function ($scope, $http, screenSize) {
     $scope.parties.remain.value = (100 - total).toFixed(4);
 
     if ($scope.parties.remain.value < 0) {
-      party.value = parseFloat(party.value) + parseFloat($scope.parties.remain.value);
+      party.value = (parseFloat(party.value) + parseFloat($scope.parties.remain.value));
       $scope.parties.remain.value = 0;
     }
 
@@ -173,9 +176,9 @@ app.controller('MainCtrl', function ($scope, $http, screenSize) {
         return val + (parseFloat($scope.parties['remain'].value) / greaterThanZero);
       }
       else {
-        return parseFloat(p.value)}
+        return parseFloat(p.value);
       }
-    ));
+    }));
     calculated.forEach(function(data, idx){
       parties[idx].advancedValue = data.value
       parties[idx].seats = data.seat
