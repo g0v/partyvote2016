@@ -139,6 +139,11 @@ app.controller('MainCtrl', function ($scope, $http, screenSize) {
     updateSliderStyle(parties, $scope.desktop);
   });
 
+  $scope.noRemain = false;
+  $scope.$watch('noRemain', function() {
+    update();
+  });
+
   function update() {
     var id = this.id;
     var party = $scope.parties[id];
@@ -155,7 +160,22 @@ app.controller('MainCtrl', function ($scope, $http, screenSize) {
       $scope.parties.remain.value = 0;
     }
 
-    var calculated = calculateSeats(totalSeats, parties.map(function(p){return parseFloat(p.value)}))
+    var greaterThanZero = parties.filter(function(party) {
+      return parseFloat(party.value) > 0 && party.id !== 'remain';
+    }).length;
+
+    var calculated = calculateSeats(totalSeats, parties.map(function(p) {
+      var val = parseFloat(p.value);
+      if ($scope.noRemain && p.id === 'remain') {
+        return 0;
+      }
+      else if ($scope.noRemain && val > 0 && p.id !== 'remain') {
+        return val + (parseFloat($scope.parties['remain'].value) / greaterThanZero);
+      }
+      else {
+        return parseFloat(p.value)}
+      }
+    ));
     calculated.forEach(function(data, idx){
       parties[idx].advancedValue = data.value
       parties[idx].seats = data.seat
