@@ -144,13 +144,13 @@ app.controller('MainCtrl', function ($scope, $http, screenSize) {
     update();
   });
 
-  function update() {
-    var id = this.id;
+  function update(id) {
+    id = this.id || id;
     var party = $scope.parties[id];
     var total = 0.0;
     parties.forEach(function(party) {
       if (party.id !== 'remain') {
-        total += party.value;
+        total +=  parseFloat(party.value);
       }
     });
     $scope.parties.remain.value = (100 - total).toFixed(4);
@@ -247,4 +247,5 @@ app.controller('MainCtrl', function ($scope, $http, screenSize) {
   });
 
   updateSliderStyle(parties, $scope.desktop);
+  $scope.update = update;
 });
