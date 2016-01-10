@@ -31,7 +31,12 @@
                        <rzslider rz-slider-model="party.value" rz-slider-options="party.options"></rzslider>
                        <div>
                          {{party.name}} <a ng-click="toggle(party)"><span ng-hide="party.id === 'remain'" class="remove-button glyphicon glyphicon-remove-sign" aria-hidden="true"></span></a><br>
-                         <div ng-hide="party.id === 'remain'">
+                         <div ng-if="party.id === 'remain'">
+                           <div ng-if="party.value > 0 && !noRemain">
+                             <strong>尚未分配完成: {{party.seats}} </strong>
+                           </div>
+                         </div>
+                         <div ng-if="party.id !== 'remain'">
                            <strong>得票率</strong><br>
                            &nbsp;&nbsp;第一階段： <input ng-change="update(party.id)" class="first-stage" type="text" ng-model="party.value">
                            <br ng-show="noRemain">
