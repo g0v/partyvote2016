@@ -177,7 +177,7 @@ app.controller('MainCtrl', function ($scope, $http, screenSize) {
         return 0;
       }
       else if ($scope.noRemain && val > 0 && p.id !== 'remain') {
-        return val + (parseFloat($scope.parties['remain'].value) / greaterThanZero);
+        return val / ( (100 - parseFloat($scope.parties['remain'].value) ) / 100 )
       }
       else {
         return parseFloat(p.value)}
