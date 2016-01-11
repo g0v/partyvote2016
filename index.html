@@ -49,8 +49,8 @@
                        </div>
                      </div>
                    </div>
-                   <label class="btn btn-primary btn-md" ng-hide="parties.remain.value == 0"><input ng-disabled="parties.remain.value == 0" type="checkbox" ng-model="noRemain"> &nbsp;正式計票（未分配比例視為無效票）</label>
-                   <div class="remain-info alert alert-info" role="alert" ng-hide="parties.remain.value == 0">實際計算政黨票時，所有比例都會被分配，無效票（未投票、廢票）不列入計算。</div>
+                   <label class="btn btn-primary btn-md" ng-hide="parties.remain.value == 0"><input ng-disabled="parties.remain.value == 0" type="checkbox" ng-model="noRemain"> &nbsp;正式計票</label>
+                   <div class="remain-info alert alert-info" role="alert" ng-hide="parties.remain.value == 0">在正式計算政黨票時，所有比例都會分配，無效票（未投票、廢票）不列入計算。</div>
                    <h2>預計當選候選人</h2>
                    <div class="row">
                      <div class="col-md-3" ng-repeat="(key, party) in parties" ng-show="party.enabled" class="party">
