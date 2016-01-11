@@ -67,7 +67,7 @@ function calculateSeats(totalSeat, stage1votes) {
     }
   });
 
-  // Apply rule 3 (Ignore the 抽籤 part)
+  // Apply rule 3
   //
   shuffle(partiesData).sort(function(a, b){return b.remain-a.remain})
   while(stage2totalSeat < totalSeat) {
