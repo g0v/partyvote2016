@@ -73,6 +73,7 @@ article {
 
 .remove-button {
   color: red;
+  cursor: pointer;
 }
 
 .howto {
