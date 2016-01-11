@@ -41,9 +41,9 @@
                          </div>
                          <div ng-if="party.id !== 'remain'">
                            <strong>得票率</strong><br>
-                           &nbsp;&nbsp;第一階段： <input ng-change="update(party.id)" class="first-stage" type="text" ng-model="party.value">
-                           <br ng-show="noRemain">
-                           <strong ng-show="noRemain">(有效: {{ party.stage1Value }})</strong>
+                           &nbsp;&nbsp;第一階段： 
+                           <input ng-show="!noRemain" ng-change="update(party.id)" class="first-stage" type="text" ng-model="party.value">
+                           <strong ng-show="noRemain">{{ party.stage1Value }}</strong>
                            <br>
                            &nbsp;&nbsp;第二階段： {{party.advancedValue}}<br>
                            席次：{{party.seats > party.candidates.length ? party.candidates.length : party.seats}}<br>
