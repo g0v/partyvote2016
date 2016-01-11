@@ -31,9 +31,17 @@
                        <rzslider rz-slider-model="party.value" rz-slider-options="party.options"></rzslider>
                        <div>
                          {{party.name}} <a ng-click="toggle(party)"><span ng-hide="party.id === 'remain'" class="remove-button glyphicon glyphicon-remove-sign" aria-hidden="true"></span></a><br>
-                         <div ng-hide="party.id === 'remain'">
+                         <div ng-if="party.id === 'remain'">
+                           <div ng-if="party.value > 0 && !noRemain">
+                             <strong>尚未分配完成: {{party.seats}} </strong>
+                           </div>
+                         </div>
+                         <div ng-if="party.id !== 'remain'">
                            <strong>得票率</strong><br>
-                           &nbsp;&nbsp;第一階段： <input ng-change="update(party.id)" class="first-stage" type="text" ng-model="party.value"><br>
+                           &nbsp;&nbsp;第一階段： <input ng-change="update(party.id)" class="first-stage" type="text" ng-model="party.value">
+                           <br ng-show="noRemain">
+                           <span ng-show="noRemain">(有效: {{ party.stage1Value }})</span>
+                           <br>
                            &nbsp;&nbsp;第二階段： {{party.advancedValue}}<br>
                            席次：{{party.seats > party.candidates.length ? party.candidates.length : party.seats}}<br>
                            <span ng-show="party.id !== 'remain' && party.seats - party.candidates.length > 0">缺額：{{party.seats - party.candidates.length}}</span>
@@ -41,7 +49,7 @@
                        </div>
                      </div>
                    </div>
-                   <label><input type="checkbox" ng-model="noRemain"> 把未分配比例視為無效票</label>
+                   <label><input ng-disabled="parties.remain.value == 0" type="checkbox" ng-model="noRemain"> 把未分配比例視為無效票</label>
                    <h2>預計當選候選人</h2>
                    <div class="row">
                      <div class="col-md-3" ng-repeat="(key, party) in parties" ng-show="party.enabled" class="party">
