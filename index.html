@@ -45,7 +45,7 @@
                    <h2>預計當選候選人</h2>
                    <div class="row">
                      <div class="col-md-3" ng-repeat="(key, party) in parties" ng-show="party.enabled" class="party">
-                       <h3>{{party.name}}</h3>
+                       <h3><a target="_blank" ng-href="http://2016.cec.gov.tw/frontsite/2016/proofreader/nationwide/detail/08/{{party.partyno}}">{{party.name}}</a></h3>
                        <span ng-repeat="candidate in party.candidates">
                          <span ng-class="{'label-info': candidate.win, 'female': candidate.gender === 'F', 'label-disabled': !candidate.win}" class="label">{{candidate.candidatename}}</span> </span>
                      </div>
