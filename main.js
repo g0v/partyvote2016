@@ -68,6 +68,7 @@ function updateSliderStyle(parties, vertical) {
 
 app.controller('MainCtrl', function ($scope, $http, screenSize) {
   var totalSeats = 34;
+  var queryString = {};
   var parties = [
     {no: 0, id: 'remain', name: '未分配比例'},
     {
@@ -129,6 +130,11 @@ app.controller('MainCtrl', function ($scope, $http, screenSize) {
 
   $scope.desktop = screenSize.is('md, lg');
   $scope.mobile = screenSize.is('xs, sm');
+
+  location.search.split('&').forEach(function(item) {
+    item = /(\w+)=([\d\.]+)/gi.exec(item);
+    if (item) queryString[item[1]] = parseFloat(item[2]) || 0;
+  });
 
   // Using dynamic method `on`, which will set the variables initially and then update the variable on window resize
   screenSize.on('md, lg', function(match){
@@ -207,6 +213,12 @@ app.controller('MainCtrl', function ($scope, $http, screenSize) {
         }
       });
     });
+
+    if (party) {
+      if (party.value > 0) queryString[id] = (parseFloat(party.value) || 0).toFixed(4);
+      else delete queryString[id];
+      history.replaceState({}, '政黨票計算機', '?'+Object.keys(queryString).map(function(key){ return key + '=' + queryString[key]}).join('&'));
+    }
   }
 
   parties.forEach(function(party) {
@@ -226,6 +238,14 @@ app.controller('MainCtrl', function ($scope, $http, screenSize) {
       onChange: update,
       onEnd: update
     };
+    if (Object.keys(queryString).length) {
+      if (queryString[party.id]) {
+        party.enabled = true
+        party.value = queryString[party.id];
+      } else {
+        party.enabled = false
+      }
+    }
   });
 
   $scope.toggle = function(party) {
@@ -233,6 +253,8 @@ app.controller('MainCtrl', function ($scope, $http, screenSize) {
     party.value = 0;
     party.seats = 0;
     party.advancedValue = 0;
+    delete queryString[party.id];
+    history.replaceState({}, '政黨票計算機', '?'+Object.keys(queryString).map(function(key){ return key + '=' + queryString[key]}).join('&'));
     update();
   };
 
@@ -246,6 +268,8 @@ app.controller('MainCtrl', function ($scope, $http, screenSize) {
       var no = parseInt(candidate.drawno);
       parties[no].candidates.push(candidate);
     });
+
+    update();
   });
 
   updateSliderStyle(parties, $scope.desktop);
