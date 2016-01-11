@@ -1,5 +1,24 @@
 var app = angular.module('partyVote', ['rzModule', 'ui.bootstrap', 'matchMedia']);
 
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
 /**
   Rules - http://law.moj.gov.tw/LawClass/LawSingle.aspx?Pcode=D0020010&FLNO=67
 
@@ -50,7 +69,7 @@ function calculateSeats(totalSeat, stage1votes) {
 
   // Apply rule 3 (Ignore the 抽籤 part)
   //
-  partiesData.sort(function(a, b){return b.remain-a.remain})
+  shuffle(partiesData).sort(function(a, b){return b.remain-a.remain})
   while(stage2totalSeat < totalSeat) {
     var partyData = partiesData.shift();
     result[partyData.id].seat += 1;
