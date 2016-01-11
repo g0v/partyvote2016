@@ -49,7 +49,7 @@
                        </div>
                      </div>
                    </div>
-                   <label><input ng-disabled="parties.remain.value == 0" type="checkbox" ng-model="noRemain"> 把未分配比例視為無效票</label>
+                   <label class="btn btn-primary btn-md" ng-hide="parties.remain.value == 0"><input ng-disabled="parties.remain.value == 0" type="checkbox" ng-model="noRemain"> &nbsp;正式計票（未分配比例視為無效票）</label>
                    <h2>預計當選候選人</h2>
                    <div class="row">
                      <div class="col-md-3" ng-repeat="(key, party) in parties" ng-show="party.enabled" class="party">
