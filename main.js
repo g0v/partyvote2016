@@ -177,12 +177,12 @@ app.controller('MainCtrl', function ($scope, $http, screenSize) {
         return 0;
       }
       else if ($scope.noRemain && val > 0 && p.id !== 'remain') {
-        return val / ( (100 - parseFloat($scope.parties['remain'].value) ) / 100 )
+        return val / ( (100 - parseFloat($scope.parties['remain'].value) ) / 100 );
       }
       else {
-        return parseFloat(p.value)}
+        return parseFloat(p.value);
       }
-    ));
+    }));
     calculated.forEach(function(data, idx){
       parties[idx].stage1Value = data.stage1votes.toFixed(4)
       parties[idx].advancedValue = data.value
