@@ -35,12 +35,15 @@
                            <div ng-if="party.value > 0 && !noRemain">
                              <strong>尚未分配完成: {{party.seats}} </strong>
                            </div>
+                           <div ng-if="party.value > 0 && noRemain">
+                             <strong>{{ party.value }}% 為廢票</strong>
+                           </div>
                          </div>
                          <div ng-if="party.id !== 'remain'">
                            <strong>得票率</strong><br>
                            &nbsp;&nbsp;第一階段： <input ng-change="update(party.id)" class="first-stage" type="text" ng-model="party.value">
                            <br ng-show="noRemain">
-                           <span ng-show="noRemain">(有效: {{ party.stage1Value }})</span>
+                           <strong ng-show="noRemain">(有效: {{ party.stage1Value }})</strong>
                            <br>
                            &nbsp;&nbsp;第二階段： {{party.advancedValue}}<br>
                            席次：{{party.seats > party.candidates.length ? party.candidates.length : party.seats}}<br>

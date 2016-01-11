@@ -22,7 +22,7 @@ function calculateSeats(totalSeat, stage1votes) {
   }, 0);
 
   var stage2votes = stage1votes.map(function(p){
-    return p >= 5 ? +(p * 100 / stage1sum).toFixed(4) : 0
+    return p >= 5 ? +(p * 100 / stage1sum).toFixed(2) : 0
   });
 
   // Apply rule 2
@@ -160,7 +160,7 @@ app.controller('MainCtrl', function ($scope, $http, screenSize) {
         total +=  parseFloat(party.value);
       }
     });
-    $scope.parties.remain.value = (100 - total).toFixed(4);
+    $scope.parties.remain.value = (100 - total).toFixed(2);
 
     if ($scope.parties.remain.value < 0) {
       party.value = parseFloat(party.value) + parseFloat($scope.parties.remain.value);
@@ -184,7 +184,7 @@ app.controller('MainCtrl', function ($scope, $http, screenSize) {
       }
     }));
     calculated.forEach(function(data, idx){
-      parties[idx].stage1Value = data.stage1votes.toFixed(4)
+      parties[idx].stage1Value = data.stage1votes.toFixed(2)
       parties[idx].advancedValue = data.value
       parties[idx].seats = data.seat
     });
@@ -215,7 +215,7 @@ app.controller('MainCtrl', function ($scope, $http, screenSize) {
     });
 
     if (party) {
-      if (party.value > 0) queryString[id] = (parseFloat(party.value) || 0).toFixed(4);
+      if (party.value > 0) queryString[id] = (parseFloat(party.value) || 0).toFixed(2);
       else delete queryString[id];
       history.replaceState({}, '政黨票計算機', '?'+Object.keys(queryString).map(function(key){ return key + '=' + queryString[key]}).join('&'));
     }
