@@ -30,18 +30,19 @@ function shuffle(array) {
   6)第一款至第三款及前款小數點均算至小數點第四位，第五位以下四捨五入。
 
   @param {Number} totalSeat - total number of seats
-  @param {Number[]} partyValues - list of raw percentage of each party
+  @param {Number[]} threshold - threshold. 5 means 5%.
+  @param {Number[]} partyValues - list of raw percentage of each party. 32 means 32%.
   @return {Object()} List of {value, seats}
 */
-function calculateSeats(totalSeat, stage1votes) {
+function calculateSeats(totalSeat, threshold, stage1votes) {
   // Apply rule 5 & rule 1
   //
   var stage1sum = stage1votes.reduce(function(s, p){
-    return s + (p >= 5 ? p : 0)
+    return s + (p >= threshold ? p : 0)
   }, 0);
 
   var stage2votes = stage1votes.map(function(p){
-    return p >= 5 ? +(p * 100 / stage1sum).toFixed(2) : 0
+    return p >= threshold ? +(p * 100 / stage1sum).toFixed(2) : 0
   });
 
   // Apply rule 2
@@ -190,7 +191,7 @@ app.controller('MainCtrl', function ($scope, $http, screenSize) {
       return parseFloat(party.value) > 0 && party.id !== 'remain';
     }).length;
 
-    var calculated = calculateSeats(totalSeats, parties.map(function(p) {
+    var calculated = calculateSeats(totalSeats, 5, parties.map(function(p) {
       var val = parseFloat(p.value);
       if ($scope.noRemain && p.id === 'remain') {
         return 0;
