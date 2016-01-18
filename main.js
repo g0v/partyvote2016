@@ -30,18 +30,19 @@ function shuffle(array) {
   6)第一款至第三款及前款小數點均算至小數點第四位，第五位以下四捨五入。
 
   @param {Number} totalSeat - total number of seats
-  @param {Number[]} partyValues - list of raw percentage of each party
+  @param {Number[]} threshold - threshold. 5 means 5%.
+  @param {Number[]} partyValues - list of raw percentage of each party. 32 means 32%.
   @return {Object()} List of {value, seats}
 */
-function calculateSeats(totalSeat, stage1votes) {
+function calculateSeats(totalSeat, threshold, stage1votes) {
   // Apply rule 5 & rule 1
   //
   var stage1sum = stage1votes.reduce(function(s, p){
-    return s + (p >= 5 ? p : 0)
+    return s + (p >= threshold ? p : 0)
   }, 0);
 
   var stage2votes = stage1votes.map(function(p){
-    return p >= 5 ? +(p * 100 / stage1sum).toFixed(2) : 0
+    return p >= threshold ? +(p * 100 / stage1sum).toFixed(2) : 0
   });
 
   // Apply rule 2
@@ -77,6 +78,27 @@ function calculateSeats(totalSeat, stage1votes) {
   }
 
   return result;
+}
+
+/**
+  Rules -
+  https://zh.wikipedia.org/wiki/%E8%81%94%E7%AB%8B%E5%88%B6
+  https://en.wikipedia.org/wiki/Mixed-member_proportional_representation
+
+  1)各政黨總當選名額，以全國總應選名額依各政黨在第二張投政黨名單的得票比率分配。（假設使用與目前不分區算法相同的最大餘數法）
+  2)扣除該黨在選舉區已得議席
+  3)其差額再由政黨比例代表名額中補足。
+
+  @param {Number} totalSeat - 總席次數量，正整數。
+  @param {Number} threshold - 小黨門檻（5 代表 5%）。程式本身沒有檢查說加起來要 = 100%，未滿 100% 的部分，視同未過門檻的小黨們的和。
+  @param {Number[]} partyVotePercentages - 各黨政黨票（不分區）得票率百分比（34 表示 34%）
+  @param {Number[]} localSeats - 各黨區域立委席次
+  @return {Object()} list of seats - 各黨總席次
+*/
+function calculateSeatsMMP(totalSeat, threshold, partyVotePercentages, localSeats) {
+  return calculateSeats(totalSeat, threshold, partyVotePercentages).map(function(party, idx){
+    return Math.max(party.seat /* expected seats */, localSeats[idx])
+  })
 }
 
 function updateSliderStyle(parties, vertical) {
@@ -190,7 +212,7 @@ app.controller('MainCtrl', function ($scope, $http, screenSize) {
       return parseFloat(party.value) > 0 && party.id !== 'remain';
     }).length;
 
-    var calculated = calculateSeats(totalSeats, parties.map(function(p) {
+    var calculated = calculateSeats(totalSeats, 5, parties.map(function(p) {
       var val = parseFloat(p.value);
       if ($scope.noRemain && p.id === 'remain') {
         return 0;
