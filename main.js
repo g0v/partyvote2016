@@ -96,11 +96,8 @@ function calculateSeats(totalSeat, threshold, stage1votes) {
   @return {Object()} list of seats - 各黨總席次
 */
 function calculateSeatsMMP(totalSeat, threshold, partyVotePercentages, localSeats) {
-  var expectedSeats = calculateSeats(totalSeat, threshold, partyVotePercentages).map(function(party){
-    return party.seat
-  })
-  return localSeats.map(function(localSeat, idx){
-    return expectedSeats[idx] < localSeat ? localSeat : expectedSeats[idx]
+  return calculateSeats(totalSeat, threshold, partyVotePercentages).map(function(party, idx){
+    return Math.max(party.seat /* expected seats */, localSeats[idx])
   })
 }
 
