@@ -80,6 +80,30 @@ function calculateSeats(totalSeat, threshold, stage1votes) {
   return result;
 }
 
+/**
+  Rules -
+  https://zh.wikipedia.org/wiki/%E8%81%94%E7%AB%8B%E5%88%B6
+  https://en.wikipedia.org/wiki/Mixed-member_proportional_representation
+
+  1)各政黨總當選名額，以全國總應選名額依各政黨在第二張投政黨名單的得票比率分配。（假設使用與目前不分區算法相同的最大餘數法）
+  2)扣除該黨在選舉區已得議席
+  3)其差額再由政黨比例代表名額中補足。
+
+  @param {Number} totalSeat - 總席次數量，正整數。
+  @param {Number} threshold - 小黨門檻（5 代表 5%）。程式本身沒有檢查說加起來要 = 100%，未滿 100% 的部分，視同未過門檻的小黨們的和。
+  @param {Number[]} partyVotePercentages - 各黨政黨票（不分區）得票率百分比（34 表示 34%）
+  @param {Number[]} localSeats - 各黨區域立委席次
+  @return {Object()} list of seats - 各黨總席次
+*/
+function calculateSeatsMMP(totalSeat, threshold, partyVotePercentages, localSeats) {
+  var expectedSeats = calculateSeats(totalSeat, threshold, partyVotePercentages).map(function(party){
+    return party.seat
+  })
+  return localSeats.map(function(localSeat, idx){
+    return expectedSeats[idx] < localSeat ? localSeat : expectedSeats[idx]
+  })
+}
+
 function updateSliderStyle(parties, vertical) {
   parties.forEach(function(party) {
     party.options.vertical = vertical;
